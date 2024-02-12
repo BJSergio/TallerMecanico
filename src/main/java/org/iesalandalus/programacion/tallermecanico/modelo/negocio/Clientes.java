@@ -41,10 +41,10 @@ public class Clientes {
             clienteBuscado.setTelefono(telefono);
             esModificado = true;
         }
-        if (telefono == null && nombre != null) {
+        if (telefono == null && nombre != null && !nombre.isBlank()) {
             clienteBuscado.setNombre(nombre);
             esModificado = true;
-        } else if (nombre == null && telefono != null) {
+        } else if (nombre == null && telefono != null && !telefono.isBlank()) {
             clienteBuscado.setTelefono(telefono);
             esModificado = true;
         }

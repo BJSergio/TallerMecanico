@@ -11,7 +11,7 @@ public class Revision {
     private static final float PRECIO_HORA = 30;
     private static final float PRECIO_DIA = 10;
     private static final float PRECIO_MATERIAL = 1.5f;
-    public static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private int horas;
@@ -27,7 +27,7 @@ public class Revision {
 
     public Revision(Revision revision) {
         Objects.requireNonNull(revision, "La revisión no puede ser nula.");
-        this.cliente = new Cliente(revision.cliente);
+        this.cliente = new Cliente(revision.cliente); // Haces una copia de la referencia
         this.vehiculo = revision.vehiculo;
         this.fechaInicio = revision.fechaInicio;
         this.fechaFin = revision.fechaFin;
