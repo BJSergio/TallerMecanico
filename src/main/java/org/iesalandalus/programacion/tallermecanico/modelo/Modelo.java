@@ -47,6 +47,7 @@ public class Modelo {
         return clientes.buscar(cliente);
     }
 
+
     public Vehiculo buscar(Vehiculo vehiculo) {
         return vehiculos.buscar(vehiculo);
     }
@@ -79,7 +80,7 @@ public class Modelo {
     }
 
     public void borrar(Vehiculo vehiculo) throws OperationNotSupportedException {
-        for(Revision revision: revisiones.get(vehiculo)) {
+        for (Revision revision : revisiones.get(vehiculo)) {
             revisiones.borrar(revision);
         }
         vehiculos.borrar(vehiculo);

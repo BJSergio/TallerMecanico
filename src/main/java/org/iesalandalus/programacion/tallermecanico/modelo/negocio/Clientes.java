@@ -16,7 +16,7 @@ public class Clientes {
     } // Inicializa la lista
 
     public List<Cliente> get() {
-        return new ArrayList<>(coleccionClientes); // Lista independiente del atributo
+        return new ArrayList<>(coleccionClientes); // Devuelvo una copia de la lista pero con las mismas referencias
     }
 
     public void insertar(Cliente cliente) throws OperationNotSupportedException {
@@ -41,23 +41,20 @@ public class Clientes {
             clienteBuscado.setTelefono(telefono);
             esModificado = true;
         }
-        if (telefono == null && nombre != null && !nombre.isBlank()) {
+        if (telefono == null && nombre != null) {
             clienteBuscado.setNombre(nombre);
             esModificado = true;
-        } else if (nombre == null && telefono != null && !telefono.isBlank()) {
+        } else if (nombre == null && telefono != null) {
             clienteBuscado.setTelefono(telefono);
             esModificado = true;
         }
         return esModificado;
     }
 
-    public Cliente buscar(Cliente cliente) {
+    public Cliente buscar(Cliente cliente) { // Antes devolvía el cliente que me pasaban por parámetro
         Objects.requireNonNull(cliente, "No se puede buscar un cliente nulo.");
-        // Devuelve el cliente y si no está en la colección devuelve null
-        if (!coleccionClientes.contains(cliente)) {
-            cliente = null;
-        }
-        return cliente;
+        int indice = coleccionClientes.indexOf(cliente); // Dame el índice que ocupa el mismo dni que el cliente que me están pasando
+        return (indice == -1) ? null : coleccionClientes.get(indice); // Después devuélvelo
     }
 
     public void borrar(Cliente cliente) throws OperationNotSupportedException {

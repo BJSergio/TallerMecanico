@@ -62,16 +62,16 @@ public class Revisiones {
             if (revision.estaCerrada() && revision.getVehiculo().equals(vehiculo) && !fechaRevision.isAfter(revision.getFechaFin())) {
                 throw new OperationNotSupportedException("El vehículo tiene una revisión posterior.");
             }
-
         }
     }
 
     private Revision getRevision(Revision revision) throws OperationNotSupportedException {
         Objects.requireNonNull(revision, "No puedo operar sobre una revisión nula.");
-        if (buscar(revision) == null) {
+        int indice = coleccionRevisiones.indexOf(revision); // Me quedo con su índice
+        if (!coleccionRevisiones.contains(revision)) {
             throw new OperationNotSupportedException("No existe ninguna revisión igual.");
         }
-        return revision;
+        return coleccionRevisiones.get(indice); // Devuélveme la revisión que se encuentra en ese índice
     }
 
     public void anadirPrecioMaterial(Revision revision, float precioMaterial) throws OperationNotSupportedException {
@@ -88,11 +88,10 @@ public class Revisiones {
     }
 
     public Revision buscar(Revision revision) {
+        // Una revisión es igual si su cliente es igual, si su vehiculo es igual y su fecha de inicio es igual
         Objects.requireNonNull(revision, "No se puede buscar una revisión nula.");
-        if (!coleccionRevisiones.contains(revision)) {
-            revision = null;
-        }
-        return revision;
+        int indice = coleccionRevisiones.indexOf(revision);
+        return (indice == -1) ? null : coleccionRevisiones.get(indice);
     }
 
     public void borrar(Revision revision) throws OperationNotSupportedException {
