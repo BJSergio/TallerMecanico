@@ -36,15 +36,15 @@ public class Clientes {
         } else {
             clienteBuscado = buscar(cliente);
         }
-        if (nombre != null && telefono != null) {
+        if (nombre != null && !nombre.isBlank() && telefono != null && !telefono.isBlank()) { // En este caso, modificar ambos
             clienteBuscado.setNombre(nombre);
             clienteBuscado.setTelefono(telefono);
             esModificado = true;
         }
-        if (telefono == null && nombre != null) {
+        if (telefono != null && telefono.isBlank() && nombre != null && !nombre.isEmpty()) {
             clienteBuscado.setNombre(nombre);
             esModificado = true;
-        } else if (nombre == null && telefono != null) {
+        } else if (nombre != null && nombre.isBlank() && telefono != null && !telefono.isEmpty()) {
             clienteBuscado.setTelefono(telefono);
             esModificado = true;
         }
