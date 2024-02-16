@@ -36,15 +36,11 @@ public class Clientes {
         } else {
             clienteBuscado = buscar(cliente);
         }
-        if (nombre != null && !nombre.isBlank() && telefono != null && !telefono.isBlank()) { // En este caso, modificar ambos
+        if (nombre != null && !nombre.isBlank()) {
             clienteBuscado.setNombre(nombre);
-            clienteBuscado.setTelefono(telefono);
             esModificado = true;
         }
-        if (telefono != null && telefono.isBlank() && nombre != null && !nombre.isEmpty()) {
-            clienteBuscado.setNombre(nombre);
-            esModificado = true;
-        } else if (nombre != null && nombre.isBlank() && telefono != null && !telefono.isEmpty()) {
+        if (telefono != null && !telefono.isBlank()) {
             clienteBuscado.setTelefono(telefono);
             esModificado = true;
         }
@@ -53,7 +49,7 @@ public class Clientes {
 
     public Cliente buscar(Cliente cliente) { // Antes devolvía el cliente que me pasaban por parámetro
         Objects.requireNonNull(cliente, "No se puede buscar un cliente nulo.");
-        int indice = coleccionClientes.indexOf(cliente); // Dame el índice que ocupa el mismo dni que el cliente que me están pasando
+        int indice = coleccionClientes.indexOf(cliente); // Dame el índice que ocupa el mismo dni
         return (indice == -1) ? null : coleccionClientes.get(indice); // Después devuélvelo
     }
 
