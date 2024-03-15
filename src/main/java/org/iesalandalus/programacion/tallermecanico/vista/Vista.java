@@ -11,6 +11,7 @@ import java.util.Objects;
 
 public class Vista {
 
+    /*
     private Controlador controlador;
 
     public void setControlador(Controlador controlador) {
@@ -26,11 +27,13 @@ public class Vista {
             ejecutar(opcion);
         } while (opcion != Opcion.SALIR);
     }
-
+    
+     */
     public void terminar() {
         System.out.println("El programa ha finalizado.");
     }
 
+    /*
     private void ejecutar(Opcion opcion) {
         switch (opcion) {
             case INSERTAR_CLIENTE -> insertarCliente();
@@ -55,6 +58,8 @@ public class Vista {
             default -> throw new IllegalArgumentException("La opción introducida no es válida.");
         }
     }
+    */
+    /*
 
     private void insertarCliente() {
         Consola.mostrarCabecera("INSERTAR CLIENTE");
@@ -65,6 +70,10 @@ public class Vista {
         }
     }
 
+     */
+
+    /*
+
     private void insertarVehiculo() {
         Consola.mostrarCabecera("INSERTAR VEHÍCULO");
         try {
@@ -73,6 +82,11 @@ public class Vista {
             System.out.println(e.getMessage());
         }
     }
+
+     */
+
+
+    /*
 
     private void insertarRevision() { //
         Consola.mostrarCabecera("INSERTAR REVISIÓN");
@@ -83,6 +97,8 @@ public class Vista {
         }
     }
 
+    /*
+
     private void buscarCliente() {
         Consola.mostrarCabecera("BUSCAR CLIENTE");
         try {
@@ -91,6 +107,10 @@ public class Vista {
             System.out.println(e.getMessage());
         }
     }
+
+     */
+
+    /*
 
     private void buscarVehiculo() {
         Consola.mostrarCabecera("BUSCAR VEHÍCULO");
@@ -101,6 +121,8 @@ public class Vista {
         }
     }
 
+     */
+    /*
     private void buscarRevision() {
         Consola.mostrarCabecera("BUSCAR REVISIÓN");
         try {
@@ -109,7 +131,8 @@ public class Vista {
             System.out.println(e.getMessage());
         }
     }
-
+    */
+    /*
     private void modificarCliente() {
         Consola.mostrarCabecera("MODIFICAR CLIENTE");
         boolean esModificado = false;
@@ -123,6 +146,10 @@ public class Vista {
         }
     }
 
+     */
+
+    /*
+
     private void anadirHoras() {
         Consola.mostrarCabecera("AÑADIR HORAS");
         try {
@@ -134,6 +161,10 @@ public class Vista {
         }
     }
 
+     */
+
+    /*
+
     private void anadirPrecioMaterial() {
         Consola.mostrarCabecera("AÑADIR PRECIO MATERIAL");
         try {
@@ -142,6 +173,10 @@ public class Vista {
             System.out.println(e.getMessage());
         }
     }
+    *
+    /*
+
+    /*
 
     private void cerrar() {
         Consola.mostrarCabecera("CERRAR REVISIÓN");
@@ -152,6 +187,10 @@ public class Vista {
         }
     }
 
+     */
+
+    /*
+
     private void borrarCliente() {
         Consola.mostrarCabecera("BORRAR CLIENTE");
         try {
@@ -160,6 +199,11 @@ public class Vista {
             System.out.println(e.getMessage());
         }
     }
+
+     */
+
+    /*
+
 
     private void borrarVehiculo() {
         Consola.mostrarCabecera("BORRAR VEHÍCULO");
@@ -170,6 +214,9 @@ public class Vista {
         }
     }
 
+    /*
+
+
     private void borrarRevision() {
         Consola.mostrarCabecera("BORRAR REVISIÓN");
         try {
@@ -178,6 +225,9 @@ public class Vista {
             System.out.println(e.getMessage());
         }
     }
+        */
+    /*
+
 
     private void listarClientes() {
         Consola.mostrarCabecera("LISTAR CLIENTES");
@@ -189,6 +239,10 @@ public class Vista {
         }
     }
 
+
+     */
+
+    /*
     private void listarVehiculos() {
         Consola.mostrarCabecera("LISTAR VEHÍCULOS");
         List<Vehiculo> vehiculoList = controlador.getVehiculos();
@@ -199,6 +253,9 @@ public class Vista {
         }
     }
 
+     */
+    /*
+
     private void listarRevisiones() {
         Consola.mostrarCabecera("LISTAR REVISIONES");
         List<Revision> revisionList = controlador.getRevision();
@@ -208,7 +265,9 @@ public class Vista {
             System.out.println(revisionList);
         }
     }
+        */
 
+    /*
     private void listarRevisionesCliente() {
         Consola.mostrarCabecera("LISTAR REVISIONES DEL CLIENTE");
         List<Revision> clienteList = controlador.getRevisiones(Consola.leerClienteDni());
@@ -218,6 +277,8 @@ public class Vista {
             System.out.println(clienteList);
         }
     }
+    */
+     /*
 
     private void listarRevisionesVehiculo() {
         List<Revision> vehiculoList = controlador.getRevisiones(Consola.leerVehiculoMatricula());
@@ -227,9 +288,17 @@ public class Vista {
             System.out.println(vehiculoList);
         }
     }
+*/
+    /*
+
+
+
 
     private void salir() {
         Consola.mostrarCabecera("SALIR");
         controlador.terminar();
     }
+
+     */
+
 }
