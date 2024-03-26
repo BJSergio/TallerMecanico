@@ -25,12 +25,12 @@ public class ModeloCascada implements Modelo {
 
     @Override
     public void comenzar() {
-        System.out.println("El modelo ha comenzado.");
+        System.out.println("El programa ha comenzado la ejecución del modelo.");
     }
 
     @Override
     public void terminar() {
-        System.out.println("El modelo ha finalizado.");
+        System.out.println("El modelo ha finalizado la ejecución del modelo.");
     }
 
     @Override

@@ -8,9 +8,9 @@ public enum FabricaModelo {
     CASCADA {
         @Override
         public Modelo crear(FabricaFuenteDatos fabricaFuenteDatos) {
-            return new ModeloCascada(fabricaFuenteDatos); // Preguntar el tipo de dato
+            return new ModeloCascada(fabricaFuenteDatos); // Devuelve un modelo con esa fuente de datos
         }
     };
-
+    
     public abstract Modelo crear(FabricaFuenteDatos fabricaFuenteDatos);
 }
