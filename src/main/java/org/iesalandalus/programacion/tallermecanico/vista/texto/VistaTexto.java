@@ -43,8 +43,8 @@ public class VistaTexto implements Vista {
 
     @Override
     public Cliente leerCliente() {
-        String nombre = Consola.leerCadena("Introduce un nombre:");
-        String dni = Consola.leerCadena("Introduce un dni:");
+        String nombre = Consola.leerCadena("Introduce un nombre: ");
+        String dni = Consola.leerCadena("Introduce un dni: ");
         String telefono = Consola.leerCadena("Introduce un teléfono:");
         return new Cliente(nombre, dni, telefono);
     }

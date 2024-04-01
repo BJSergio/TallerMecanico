@@ -137,6 +137,10 @@ public abstract class Trabajo {
 
     public abstract float getPrecioEspecifico();
 
+    /*
+    Un trabajo es el mismo si se busca por su fechaInicio, cliente y vehículo.
+    Por lo que no tiene en cuenta si es un Mecánico o una Revisión
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

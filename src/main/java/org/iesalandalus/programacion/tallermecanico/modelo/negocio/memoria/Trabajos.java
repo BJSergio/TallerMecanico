@@ -11,6 +11,7 @@ import java.util.Objects;
 
 public class Trabajos implements ITrabajos {
 
+    private static final String MENSAJE_TRABAJO_ABIERTO = "No existe ningún trabajo abierto para dicho vehículo.";
     private final List<Trabajo> coleccionTrabajos;
 
     public Trabajos() {
@@ -72,7 +73,7 @@ public class Trabajos implements ITrabajos {
     public void anadirHoras(Trabajo trabajo, int horas) throws OperationNotSupportedException {
         Objects.requireNonNull(trabajo, "No puedo añadir horas a un trabajo nulo.");
         if (getTrabajoAbierto(trabajo.getVehiculo()) == null) {
-            throw new OperationNotSupportedException("No existe ningún trabajo abierto para dicho vehículo.");
+            throw new OperationNotSupportedException(MENSAJE_TRABAJO_ABIERTO);
         }
         trabajo.anadirHoras(horas);
     }
@@ -94,7 +95,7 @@ public class Trabajos implements ITrabajos {
     public void anadirPrecioMaterial(Trabajo trabajo, float precioMaterial) throws OperationNotSupportedException {
         Objects.requireNonNull(trabajo, "No puedo añadir precio del material a un trabajo nulo.");
         if (getTrabajoAbierto(trabajo.getVehiculo()) == null) {
-            throw new OperationNotSupportedException("No existe ningún trabajo abierto para dicho vehículo.");
+            throw new OperationNotSupportedException(MENSAJE_TRABAJO_ABIERTO);
         }
         if (trabajo instanceof Revision) {
             throw new OperationNotSupportedException("No se puede añadir precio al material para este tipo de trabajos.");
@@ -107,7 +108,7 @@ public class Trabajos implements ITrabajos {
     public void cerrar(Trabajo trabajo, LocalDate fechaFin) throws OperationNotSupportedException {
         Objects.requireNonNull(trabajo, "No puedo cerrar un trabajo nulo.");
         if (getTrabajoAbierto(trabajo.getVehiculo()) == null) {
-            throw new OperationNotSupportedException("No existe ningún trabajo abierto para dicho vehículo.");
+            throw new OperationNotSupportedException(MENSAJE_TRABAJO_ABIERTO);
         }
         trabajo.cerrar(fechaFin);
     }

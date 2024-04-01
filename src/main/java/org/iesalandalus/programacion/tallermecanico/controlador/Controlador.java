@@ -13,7 +13,6 @@ public class Controlador implements IControlador {
     private final Modelo modelo;
     private final Vista vista;
 
-
     public Controlador(Modelo modelo, Vista vista) {
         Objects.requireNonNull(modelo, "El modelo no puede ser nulo.");
         Objects.requireNonNull(vista, "La vista no puede ser nula.");
@@ -74,29 +73,23 @@ public class Controlador implements IControlador {
                     modelo.insertar(new Mecanico(modelo.buscar(vista.leerClienteDni()), modelo.buscar(vista.leerVehiculoMatricula()), Consola.leerFecha("Introduce la fecha de inicio del trabajo mecánico:")));
                     resultado = "Trabajo mecánico insertado correctamente.";
                 }
-                case BUSCAR_TRABAJO -> {
-                    Trabajo trabajo = new Revision(modelo.buscar(vista.leerClienteDni()), modelo.buscar(vista.leerVehiculoMatricula()), Consola.leerFecha("Introduce la fecha de inicio:"));
-                    Trabajo trabajoEncontrado = modelo.buscar(trabajo);
-                    if (trabajoEncontrado == null) {
-                        trabajo = new Mecanico(trabajo.getCliente(), trabajo.getVehiculo(), trabajo.getFechaInicio());
-                    }
-                    vista.mostrarTrabajo(trabajo);
-                }
-                case BORRAR_TRABAJO -> modelo.borrar(modelo.buscar(vista.leerTrabajoVehiculo()));
+                case BUSCAR_TRABAJO -> vista.mostrarTrabajo(modelo.buscar(vista.leerRevision()));
+                case BORRAR_TRABAJO -> modelo.borrar(modelo.buscar(vista.leerRevision()));
                 case LISTAR_TRABAJOS -> vista.mostrarTrabajos(modelo.getTrabajos());
                 case LISTAR_TRABAJOS_CLIENTE -> vista.mostrarTrabajos(modelo.getTrabajos(vista.leerClienteDni()));
                 case LISTAR_TRABAJOS_VEHICULO ->
                         vista.mostrarTrabajos(modelo.getTrabajos(vista.leerVehiculoMatricula()));
                 case ANADIR_HORAS_TRABAJO -> {
-                    modelo.anadirHoras(modelo.buscar(vista.leerMecanico()), vista.leerHoras());
+                    Trabajo mecanico = vista.leerMecanico();
+                    modelo.anadirHoras((modelo.buscar(mecanico)), vista.leerHoras());
                     resultado = "Las horas se han añadido correctamente.";
                 }
                 case ANADIR_PRECIO_MATERIAL_TRABAJO -> {
-                    modelo.anadirPrecioMaterial(new Mecanico(modelo.buscar(vista.leerClienteDni()), modelo.buscar(vista.leerVehiculoMatricula()), Consola.leerFecha("Introduce la fecha de inicio:")), vista.leerPrecioMaterial());
+                    modelo.anadirPrecioMaterial(modelo.buscar(new Mecanico(modelo.buscar(vista.leerClienteDni()), modelo.buscar(vista.leerVehiculoMatricula()), Consola.leerFecha("Introduce la fecha de inicio:"))), vista.leerPrecioMaterial());
                     resultado = "El precio del material se ha añadido correctamente.";
                 }
                 case CERRAR_TRABAJO -> {
-                    modelo.cerrar(vista.leerMecanico(), vista.leerFechaCierre());
+                    modelo.cerrar(modelo.buscar(vista.leerMecanico()), vista.leerFechaCierre());
                     resultado = "El trabajo se ha cerrado correctamente.";
                 }
                 case SALIR -> System.out.println("Usted ha salido de la aplicación.");

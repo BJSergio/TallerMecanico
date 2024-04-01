@@ -66,13 +66,8 @@ public class ModeloCascada implements Modelo {
 
     @Override
     public Trabajo buscar(Trabajo trabajo) {
-        Trabajo trabajoEncontrado = null;
-        if (trabajo instanceof Mecanico) {
-            trabajoEncontrado = new Mecanico((Mecanico) trabajos.buscar(trabajo));
-        } else if (trabajo instanceof Revision) {
-            trabajoEncontrado = new Revision((Revision) trabajos.buscar(trabajo));
-        }
-        return trabajoEncontrado;
+        // Antes devolvía una copia del trabajo, por eso no me cogía los cambios
+        return trabajos.buscar(trabajo);
     }
 
     @Override

@@ -44,7 +44,7 @@ public record Vehiculo(String marca, String modelo, String matricula) {
         if (!(o instanceof Vehiculo vehiculo)) return false;
         return Objects.equals(matricula, vehiculo.matricula);
     }
-
+    
     @Override
     public int hashCode() {
         return Objects.hash(matricula);
