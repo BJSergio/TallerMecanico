@@ -95,8 +95,7 @@ public class VistaTexto implements Vista {
 
     @Override
     public Trabajo leerTrabajoVehiculo() {
-        Vehiculo vehiculo = leerVehiculoMatricula();
-        return Trabajo.get(vehiculo);
+        return Trabajo.get(leerVehiculoMatricula());
     }
 
     @Override

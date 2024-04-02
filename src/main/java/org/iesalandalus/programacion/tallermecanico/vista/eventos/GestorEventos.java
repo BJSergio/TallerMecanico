@@ -19,7 +19,7 @@ public class GestorEventos {
             List<ReceptorEventos> suscriptores = receptores.get(evento);
             suscriptores.add(receptorEventos);
             if (receptores.containsKey(evento)) {
-                receptores.replace(evento, suscriptores); // Cambia la lista relacionada con esa clave
+                receptores.replace(evento, suscriptores); // Cambia el valor relacionado con la clave
             }
         }
     }
