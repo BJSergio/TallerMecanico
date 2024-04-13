@@ -1,4 +1,4 @@
-package org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria;
+package org.iesalandalus.programacion.tallermecanico.modelo.negocio.ficheros;
 
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.*;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.ITrabajos;
@@ -13,8 +13,27 @@ public class Trabajos implements ITrabajos {
 
     private final List<Trabajo> coleccionTrabajos;
 
-    public Trabajos() {
+    private static Trabajos instancia;
+
+    private Trabajos() {
         coleccionTrabajos = new ArrayList<>();
+    }
+
+    public static Trabajos getInstancia() {
+        if (instancia == null) {
+            instancia = new Trabajos();
+        }
+        return instancia;
+    }
+
+    @Override
+    public void comenzar() {
+
+    }
+
+    @Override
+    public void terminar() {
+
     }
 
     @Override

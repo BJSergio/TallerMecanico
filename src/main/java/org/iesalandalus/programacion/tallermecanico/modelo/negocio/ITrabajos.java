@@ -9,6 +9,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface ITrabajos {
+    void comenzar();
+
+    void terminar();
+
     List<Trabajo> get();
 
     List<Trabajo> get(Cliente cliente);

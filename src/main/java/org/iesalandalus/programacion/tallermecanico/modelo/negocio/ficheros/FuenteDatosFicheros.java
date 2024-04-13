@@ -1,25 +1,30 @@
-package org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria;
+package org.iesalandalus.programacion.tallermecanico.modelo.negocio.ficheros;
 
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IClientes;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IFuenteDatos;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.ITrabajos;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IVehiculos;
 
-public class FuenteDatosMemoria implements IFuenteDatos {
+public class FuenteDatosFicheros implements IFuenteDatos {
+
+    /*
+     La primera vez que se llamen va a ser cuando creemos la fuente de datos
+      por lo que van a inicializar la lista
+     */
 
     @Override
     public IClientes crearClientes() {
-        return new Clientes();
+        return Clientes.getInstancia();
     }
 
     @Override
     public IVehiculos crearVehiculos() {
-        return new Vehiculos();
+        return Vehiculos.getInstancia();
     }
 
     @Override
     public ITrabajos crearTrabajos() {
-        return new Trabajos();
+        return Trabajos.getInstancia();
     }
 
 

@@ -1,4 +1,4 @@
-package org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria;
+package org.iesalandalus.programacion.tallermecanico.modelo.negocio.ficheros;
 
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IVehiculos;
@@ -9,10 +9,30 @@ import java.util.List;
 import java.util.Objects;
 
 public class Vehiculos implements IVehiculos {
-     private final List<Vehiculo> coleccionVehiculos;
 
-    public Vehiculos() {
+    private final List<Vehiculo> coleccionVehiculos;
+
+    private static Vehiculos instancia;
+
+    private Vehiculos() {
         coleccionVehiculos = new ArrayList<>();
+    }
+
+    static Vehiculos getInstancia() {
+        if (instancia == null) {
+            instancia = new Vehiculos();
+        }
+        return instancia;
+    }
+
+    @Override
+    public void comenzar() {
+
+    }
+
+    @Override
+    public void terminar() {
+
     }
 
     @Override

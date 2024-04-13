@@ -1,9 +1,14 @@
-package org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria;
+package org.iesalandalus.programacion.tallermecanico.modelo.negocio.ficheros;
 
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IClientes;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import javax.naming.OperationNotSupportedException;
+import javax.xml.parsers.DocumentBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -12,8 +17,69 @@ public class Clientes implements IClientes {
 
     private final List<Cliente> coleccionClientes;
 
-    public Clientes() {
+    private static Clientes instancia;
+
+    private static final String FICHERO_CLIENTES = "clientes.xml";
+    private static final String RAIZ = "clientes";
+    private static final String CLIENTE = "cliente";
+    private static final String NOMBRE = "nombre";
+    private static final String DNI = "dni";
+    private static final String TELEFONO = "telefono";
+
+    private Clientes() {
         coleccionClientes = new ArrayList<>();
+    }
+
+    static Clientes getInstancia() {
+        if (instancia == null) {
+            instancia = new Clientes();
+        }
+        return instancia;
+    }
+
+    @Override
+    public void comenzar() {
+        Document documentoXml = crearDocumentoXml();
+        
+
+
+    }
+
+    private Cliente getCliente(Element elemento) {
+        String dni = elemento.getAttribute(DNI);
+        String nombre = elemento.getAttribute(NOMBRE);
+        String telefono = elemento.getAttribute(TELEFONO);
+        return new Cliente(dni, nombre, telefono);
+    }
+
+    @Override
+    public void terminar() {
+
+    }
+
+    private Document crearDocumentoXml() {
+        DocumentBuilder constructor = UtilidadesXml.crearConstructorDocumentoXml();
+        Document documentoXml = null;
+        if (constructor != null) {
+            documentoXml = constructor.newDocument();
+        }
+        return documentoXml; // Devuelvo ese documentoXml con un árbol DOM vacío
+    }
+
+    private Element getElemento(Document documentoXml, Cliente cliente) {
+
+        boolean esMismoCliente = false;
+        Element clienteADevolver = null;
+        NodeList clientes = documentoXml.getElementsByTagName(CLIENTE);
+
+        for (int i = 0; i < clientes.getLength() && !esMismoCliente; i++) {
+            Element iteradorCliente = (Element) clientes.item(i);
+            if (iteradorCliente.getAttribute(DNI).equals(cliente.getDni())) {
+                clienteADevolver = iteradorCliente;
+                esMismoCliente = true;
+            }
+        }
+        return clienteADevolver;
     }
 
     @Override
