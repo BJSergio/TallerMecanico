@@ -1,6 +1,7 @@
 package org.iesalandalus.programacion.tallermecanico.modelo.dominio;
 
 import java.time.LocalDate;
+import java.util.Locale;
 
 public class Revision extends Trabajo {
 
@@ -23,9 +24,9 @@ public class Revision extends Trabajo {
     public String toString() {
         String cadenaADevolver;
         if (!estaCerrado()) {
-            cadenaADevolver = String.format("Revisión -> %s - %s (%s - ): %d horas", getCliente(), getVehiculo(), getFechaInicio().format(FORMATO_FECHA), getHoras());
+            cadenaADevolver = String.format(Locale.US, "Revisión -> %s - %s (%s - ): %d horas", getCliente(), getVehiculo(), getFechaInicio().format(FORMATO_FECHA), getHoras());
         } else {
-            cadenaADevolver = String.format("Revisión -> %s - %s (%s - %s): %d horas, %.2f € total", getCliente(), getVehiculo(), getFechaInicio().format(FORMATO_FECHA), getFechaFin().format(FORMATO_FECHA), getHoras(), getPrecio());
+            cadenaADevolver = String.format(Locale.US, "Revisión -> %s - %s (%s - %s): %d horas, %.2f € total", getCliente(), getVehiculo(), getFechaInicio().format(FORMATO_FECHA), getFechaFin().format(FORMATO_FECHA), getHoras(), getPrecio());
         }
         return cadenaADevolver;
     }

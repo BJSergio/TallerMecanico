@@ -4,11 +4,11 @@ import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IClientes;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.naming.OperationNotSupportedException;
 import javax.xml.parsers.DocumentBuilder;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -19,7 +19,7 @@ public class Clientes implements IClientes {
 
     private static Clientes instancia;
 
-    private static final String FICHERO_CLIENTES = "clientes.xml";
+    private static final String FICHERO_CLIENTES = String.format("%s%s%s", "datos", File.separator, "clientes.xml");
     private static final String RAIZ = "clientes";
     private static final String CLIENTE = "cliente";
     private static final String NOMBRE = "nombre";
@@ -39,22 +39,44 @@ public class Clientes implements IClientes {
 
     @Override
     public void comenzar() {
-        Document documentoXml = crearDocumentoXml();
-        
+        Document documentoXml = UtilidadesXml.leerDocumentoXml(FICHERO_CLIENTES);
+        System.out.println("El fichero clientes.xml se ha leído correctamente.");
+        procesarDocumentoXml(documentoXml);
+    }
 
-
+    private void procesarDocumentoXml(Document documentoXml) {
+        // Lee el documento xml e inserta sus clientes a la lista
+        Objects.requireNonNull(documentoXml, "No puedo procesar un documento nulo.");
+        NodeList clientes = documentoXml.getElementsByTagName(CLIENTE);
+        for (int i = 0; i < clientes.getLength(); i++) {
+            Element elemento = (Element) clientes.item(i);
+            try {
+                insertar(getCliente(elemento));
+            } catch (IllegalArgumentException | NullPointerException | OperationNotSupportedException e) {
+                System.out.println("ERROR: No se puede procesar el cliente número " + i + ", " + e.getMessage().toLowerCase());
+            }
+        }
     }
 
     private Cliente getCliente(Element elemento) {
         String dni = elemento.getAttribute(DNI);
         String nombre = elemento.getAttribute(NOMBRE);
         String telefono = elemento.getAttribute(TELEFONO);
-        return new Cliente(dni, nombre, telefono);
+        return new Cliente(nombre, dni, telefono);
     }
 
     @Override
     public void terminar() {
-
+        // Sobreescribe el fichero con los clientes de la lista19
+        Document documentoXml = crearDocumentoXml();
+        if (documentoXml != null) {
+            documentoXml.appendChild(documentoXml.createElement(RAIZ));
+            for (Cliente cliente : coleccionClientes) {
+                Element elemento = getElemento(documentoXml, cliente);
+                documentoXml.getDocumentElement().appendChild(elemento); // Añade ese cliente como hijo de la raíz.
+            }
+        }
+        UtilidadesXml.escribirDocumentoXml(documentoXml, FICHERO_CLIENTES);
     }
 
     private Document crearDocumentoXml() {
@@ -67,19 +89,14 @@ public class Clientes implements IClientes {
     }
 
     private Element getElemento(Document documentoXml, Cliente cliente) {
-
-        boolean esMismoCliente = false;
-        Element clienteADevolver = null;
-        NodeList clientes = documentoXml.getElementsByTagName(CLIENTE);
-
-        for (int i = 0; i < clientes.getLength() && !esMismoCliente; i++) {
-            Element iteradorCliente = (Element) clientes.item(i);
-            if (iteradorCliente.getAttribute(DNI).equals(cliente.getDni())) {
-                clienteADevolver = iteradorCliente;
-                esMismoCliente = true;
-            }
-        }
-        return clienteADevolver;
+        // Antes devolvía el elemento correspondiente a ese cliente
+        Objects.requireNonNull(documentoXml, "El documento xml no puede ser nulo.");
+        Objects.requireNonNull(cliente, "El cliente no puede ser nulo.");
+        Element elementoCliente = documentoXml.createElement(CLIENTE);
+        elementoCliente.setAttribute(DNI, cliente.getDni());
+        elementoCliente.setAttribute(NOMBRE, cliente.getNombre());
+        elementoCliente.setAttribute(TELEFONO, cliente.getTelefono());
+        return elementoCliente;
     }
 
     @Override

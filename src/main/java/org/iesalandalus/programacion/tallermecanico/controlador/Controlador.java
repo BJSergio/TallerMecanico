@@ -2,11 +2,13 @@ package org.iesalandalus.programacion.tallermecanico.controlador;
 
 import org.iesalandalus.programacion.tallermecanico.modelo.FabricaModelo;
 import org.iesalandalus.programacion.tallermecanico.modelo.Modelo;
+import org.iesalandalus.programacion.tallermecanico.modelo.dominio.TipoTrabajo;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.FabricaFuenteDatos;
 import org.iesalandalus.programacion.tallermecanico.vista.FabricaVista;
 import org.iesalandalus.programacion.tallermecanico.vista.Vista;
 import org.iesalandalus.programacion.tallermecanico.vista.eventos.Evento;
 
+import java.util.Map;
 import java.util.Objects;
 
 public class Controlador implements IControlador {
@@ -25,13 +27,13 @@ public class Controlador implements IControlador {
 
     @Override
     public void comenzar() {
-        modelo.comenzar();
+        modelo.comenzar(); // Llama a comenzar de Clientes
         vista.comenzar();
     }
 
     @Override
     public void terminar() {
-        modelo.terminar();
+        modelo.terminar(); // Llama a terminar de Clientes
         vista.terminar();
     }
 
@@ -93,7 +95,11 @@ public class Controlador implements IControlador {
                     modelo.cerrar(vista.leerTrabajoVehiculo(), vista.leerFechaCierre());
                     resultado = "El trabajo se ha cerrado correctamente.";
                 }
-                case SALIR -> System.out.println("Usted ha salido de la aplicación.");
+                case MOSTRAR_ESTADISTICAS_MENSUALES -> {
+                    Map<TipoTrabajo, Integer> estadisticas = modelo.getEstadisticasMensuales(vista.leerMes());
+                    vista.mostrarEstadisticasMensuales(estadisticas);
+                }
+                case SALIR -> System.out.println("Adiós!!!");
             }
             if (!resultado.isBlank()) {
                 vista.notificarResultado(evento, resultado, true);

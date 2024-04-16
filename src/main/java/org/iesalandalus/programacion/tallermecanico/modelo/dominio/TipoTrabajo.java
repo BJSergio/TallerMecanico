@@ -2,8 +2,8 @@ package org.iesalandalus.programacion.tallermecanico.modelo.dominio;
 
 public enum TipoTrabajo {
 
-    MECANICO("Mecánico"),
-    REVISION("Revisión");
+    MECANICO("mecanico"),
+    REVISION("revision");
 
     final String nombre;
 
@@ -15,4 +15,8 @@ public enum TipoTrabajo {
         return trabajo instanceof Mecanico ? MECANICO : REVISION;
     }
 
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }

@@ -10,10 +10,13 @@ public class Main {
     public static void main(String[] args) {
 
         // El controlador crea el modelo usando la FabricaFuenteDatos ficheros y la vista
+        // Float a cadena = String.format(Locale.US,"%f",precio)
+        // Cadena a float = Float.parseFloat(cadenaPrecio.replace(',','.')
         FabricaModelo modelo = FabricaModelo.CASCADA;
         FabricaFuenteDatos fuenteDatos = FabricaFuenteDatos.FICHEROS;
         FabricaVista vista = FabricaVista.TEXTO;
         Controlador controlador = new Controlador(modelo, fuenteDatos, vista);
         controlador.comenzar();
+        controlador.terminar();
     }
 }

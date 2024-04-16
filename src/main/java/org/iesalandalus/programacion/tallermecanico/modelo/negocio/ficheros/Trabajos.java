@@ -2,14 +2,32 @@ package org.iesalandalus.programacion.tallermecanico.modelo.negocio.ficheros;
 
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.*;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.ITrabajos;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import javax.naming.OperationNotSupportedException;
+import javax.xml.parsers.DocumentBuilder;
+import java.io.File;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class Trabajos implements ITrabajos {
+
+    private static final String FICHERO_TRABAJOS = String.format("%s%s%s", "datos", File.separator, "trabajos.xml");
+    private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final String RAIZ = "trabajos";
+    private static final String TRABAJO = "trabajo";
+    private static final String CLIENTE = "cliente";
+    private static final String VEHICULO = "vehiculo";
+    private static final String FECHA_INICIO = "fechaInicio";
+    private static final String FECHA_FIN = "fechaFin";
+    private static final String HORAS = "horas";
+    private static final String PRECIO_MATERIAL = "precioMaterial";
+    private static final String TIPO = "tipo";
+    private static final String REVISION = TipoTrabajo.REVISION.toString();
+    private static final String MECANICO = TipoTrabajo.MECANICO.toString();
 
     private final List<Trabajo> coleccionTrabajos;
 
@@ -28,12 +46,94 @@ public class Trabajos implements ITrabajos {
 
     @Override
     public void comenzar() {
+        Document documentoXml = UtilidadesXml.leerDocumentoXml(FICHERO_TRABAJOS);
+        System.out.println("El fichero trabajos.xml se ha leído correctamente.");
+        procesarDocumentoXml(documentoXml);
+    }
 
+    private void procesarDocumentoXml(Document documentoXml) {
+        Objects.requireNonNull(documentoXml, "No puedo procesar un documento nulo.");
+        NodeList listaTrabajos = documentoXml.getElementsByTagName(TRABAJO);
+        for (int i = 0; i < listaTrabajos.getLength(); i++) {
+            Element elementoTrabajo = (Element) listaTrabajos.item(i);
+            try {
+                insertar(getTrabajo(elementoTrabajo));
+            } catch (OperationNotSupportedException | NullPointerException e) {
+                System.out.println("ERROR: Al procesar el trabajo número: " + i + ", " + e.getMessage().toLowerCase());
+            }
+        }
+    }
+
+    private Trabajo getTrabajo(Element elemento) throws OperationNotSupportedException {
+        Objects.requireNonNull(elemento, "El elemento no puede ser nulo.");
+        Trabajo trabajoADevolver;
+        Cliente clienteEncontrado = Clientes.getInstancia().buscar(Cliente.get(elemento.getAttribute(CLIENTE)));
+        Vehiculo vehiculoEncontrado = Vehiculos.getInstancia().buscar(Vehiculo.get(elemento.getAttribute(VEHICULO)));
+        LocalDate fechaInicio = LocalDate.parse(elemento.getAttribute(FECHA_INICIO), FORMATO_FECHA);
+        if (elemento.getAttribute(TIPO).equals(MECANICO)) {
+            trabajoADevolver = new Mecanico(clienteEncontrado, vehiculoEncontrado, fechaInicio);
+            if (elemento.hasAttribute(PRECIO_MATERIAL)) {
+                float precioMaterial = Float.parseFloat(elemento.getAttribute(PRECIO_MATERIAL));
+                ((Mecanico) trabajoADevolver).anadirPrecioMaterial(precioMaterial);
+            }
+        } else {
+            trabajoADevolver = new Revision(clienteEncontrado, vehiculoEncontrado, fechaInicio);
+        }
+        if (elemento.hasAttribute(HORAS)) {
+            int horas = Integer.parseInt(elemento.getAttribute(HORAS));
+            trabajoADevolver.anadirHoras(horas);
+        }
+        if (elemento.hasAttribute(FECHA_FIN)) {
+            LocalDate fechaFin = LocalDate.parse(elemento.getAttribute(FECHA_FIN), FORMATO_FECHA);
+            trabajoADevolver.cerrar(fechaFin);
+        }
+        return trabajoADevolver;
     }
 
     @Override
     public void terminar() {
+        Document documentoXml = crearDocumentoXml();
+        if (documentoXml != null) {
+            documentoXml.appendChild(documentoXml.createElement(RAIZ));
+            for (Trabajo trabajo : coleccionTrabajos) {
+                Element elementoTrabajo = getElemento(documentoXml, trabajo);
+                documentoXml.getDocumentElement().appendChild(elementoTrabajo);
+            }
+        }
+        UtilidadesXml.escribirDocumentoXml(documentoXml, FICHERO_TRABAJOS);
+    }
 
+    private Document crearDocumentoXml() {
+        DocumentBuilder constructor = UtilidadesXml.crearConstructorDocumentoXml();
+        Document documentoXml = null;
+        if (constructor != null) {
+            documentoXml = constructor.newDocument();
+        }
+        return documentoXml;
+    }
+
+    private Element getElemento(Document documentoXml, Trabajo trabajo) {
+        Objects.requireNonNull(documentoXml, "El documento xml no puede ser nulo.");
+        Objects.requireNonNull(trabajo, "El trabajo no puede ser nulo.");
+        Element elementoTrabajo = documentoXml.createElement(TRABAJO);
+        if (trabajo instanceof Revision) {
+            elementoTrabajo.setAttribute(TIPO, REVISION);
+        } else if (trabajo instanceof Mecanico mecanico) {
+            elementoTrabajo.setAttribute(TIPO, MECANICO);
+            if (mecanico.getPrecioMaterial() != 0) {
+                elementoTrabajo.setAttribute(PRECIO_MATERIAL, String.valueOf(mecanico.getPrecioMaterial()).replace(',', '.'));
+            }
+        }
+        elementoTrabajo.setAttribute(CLIENTE, trabajo.getCliente().getDni());
+        elementoTrabajo.setAttribute(VEHICULO, trabajo.getVehiculo().matricula());
+        elementoTrabajo.setAttribute(FECHA_INICIO, trabajo.getFechaInicio().format(FORMATO_FECHA));
+        if (trabajo.getHoras() != 0) {
+            elementoTrabajo.setAttribute(HORAS, String.valueOf(trabajo.getHoras()));
+        }
+        if (trabajo.estaCerrado()) {
+            elementoTrabajo.setAttribute(FECHA_FIN, trabajo.getFechaFin().format(FORMATO_FECHA));
+        }
+        return elementoTrabajo;
     }
 
     @Override
@@ -61,6 +161,30 @@ public class Trabajos implements ITrabajos {
             }
         }
         return revisionTrabajo;
+    }
+
+    @Override
+    public Map<TipoTrabajo, Integer> getEstadisticasMensuales(LocalDate mes) {
+        Objects.requireNonNull(mes, "El mes no puede ser nulo.");
+        Map<TipoTrabajo, Integer> estadisticas = inicializarEstadisticas();
+        int contadorMecanico = 0;
+        int contadorRevision = 0;
+        for (Trabajo trabajo : coleccionTrabajos) {
+            if (trabajo.getFechaInicio().getMonth().equals(mes.getMonth())) {
+                if (trabajo instanceof Mecanico) {
+                    contadorMecanico++;
+                } else if (trabajo instanceof Revision) {
+                    contadorRevision++;
+                }
+            }
+        }
+        estadisticas.put(TipoTrabajo.MECANICO, contadorMecanico);
+        estadisticas.put(TipoTrabajo.REVISION, contadorRevision);
+        return estadisticas;
+    }
+
+    private Map<TipoTrabajo, Integer> inicializarEstadisticas() {
+        return new EnumMap<>(TipoTrabajo.class);
     }
 
     @Override
@@ -93,7 +217,7 @@ public class Trabajos implements ITrabajos {
         getTrabajoAbierto(trabajo.getVehiculo()).anadirHoras(horas);
     }
 
-    private Trabajo getTrabajoAbierto(Vehiculo vehiculo) { // Busca para ese vehículo su último trabajo abierto
+    private Trabajo getTrabajoAbierto(Vehiculo vehiculo) throws OperationNotSupportedException { // Busca para ese vehículo su último trabajo abierto
         Objects.requireNonNull(vehiculo, "El vehículo no puede ser nulo.");
         boolean trabajoEncontrado = false;
         Trabajo trabajoADevolver = null;
@@ -104,7 +228,7 @@ public class Trabajos implements ITrabajos {
             }
         }
         if (trabajoADevolver == null) {
-            throw new IllegalArgumentException("No existe ningún trabajo abierto para dicho vehículo.");
+            throw new OperationNotSupportedException("No existe ningún trabajo abierto para dicho vehículo.");
         }
         return trabajoADevolver;
     }

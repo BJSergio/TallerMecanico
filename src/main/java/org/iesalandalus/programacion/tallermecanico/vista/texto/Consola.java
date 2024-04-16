@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class Consola {
 
-    private static final String CADENA_FORMATO_FECHA = "dd/MM/yyyy";
+    static final String CADENA_FORMATO_FECHA = "dd/MM/yyyy";
 
     private Consola() {
 
@@ -58,7 +58,7 @@ public class Consola {
         return Entrada.cadena();
     }
 
-    public static LocalDate leerFecha(String mensaje) {
+    static LocalDate leerFecha(String mensaje) {
         Pattern patron = Pattern.compile(CADENA_FORMATO_FECHA);
         DateTimeFormatter comparador = DateTimeFormatter.ofPattern(String.valueOf(patron));
         LocalDate fecha = null;

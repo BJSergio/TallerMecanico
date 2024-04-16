@@ -2,6 +2,7 @@ package org.iesalandalus.programacion.tallermecanico.modelo.dominio;
 
 import javax.naming.OperationNotSupportedException;
 import java.time.LocalDate;
+import java.util.Locale;
 
 public class Mecanico extends Trabajo {
 
@@ -51,9 +52,9 @@ public class Mecanico extends Trabajo {
     public String toString() {
         String cadenaADevolver;
         if (!estaCerrado()) {
-            cadenaADevolver = String.format("Mecánico -> %s - %s (%s - ): %d horas, %.2f € en material", getCliente(), getVehiculo(), getFechaInicio().format(FORMATO_FECHA), getHoras(), precioMaterial);
+            cadenaADevolver = String.format(Locale.US, "Mecánico -> %s - %s (%s - ): %d horas, %.2f € en material", getCliente(), getVehiculo(), getFechaInicio().format(FORMATO_FECHA), getHoras(), precioMaterial);
         } else {
-            cadenaADevolver = String.format("Mecánico -> %s - %s (%s - %s): %d horas, %.2f € en material, %.2f € total", getCliente(), getVehiculo(), getFechaInicio().format(FORMATO_FECHA), getFechaFin().format(FORMATO_FECHA), getHoras(), precioMaterial, getPrecio());
+            cadenaADevolver = String.format(Locale.US, "Mecánico -> %s - %s (%s - %s): %d horas, %.2f € en material, %.2f € total", getCliente(), getVehiculo(), getFechaInicio().format(FORMATO_FECHA), getFechaFin().format(FORMATO_FECHA), getHoras(), precioMaterial, getPrecio());
         }
         return cadenaADevolver;
     }

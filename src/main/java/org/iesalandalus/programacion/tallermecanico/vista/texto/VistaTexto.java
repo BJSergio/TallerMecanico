@@ -4,8 +4,10 @@ import org.iesalandalus.programacion.tallermecanico.modelo.dominio.*;
 import org.iesalandalus.programacion.tallermecanico.vista.Vista;
 import org.iesalandalus.programacion.tallermecanico.vista.eventos.Evento;
 import org.iesalandalus.programacion.tallermecanico.vista.eventos.GestorEventos;
+import org.iesalandalus.programacion.utilidades.Entrada;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class VistaTexto implements Vista {
@@ -38,7 +40,7 @@ public class VistaTexto implements Vista {
 
     @Override
     public void terminar() {
-        System.out.println("Usted ha cerrado la aplicación por lo tanto, ha finalizado su ejecución.");
+        System.out.println("Ha cerrado la aplicación, por lo que ha finalizado su ejecución.");
     }
 
     @Override
@@ -113,6 +115,13 @@ public class VistaTexto implements Vista {
         return Consola.leerFecha("Introduce la fecha de cierre para dar por finalizado el servicio:");
     }
 
+    public LocalDate leerMes() {
+        System.out.print("Introduce un mes: (Puede ser con un 0 a la izquierda)");
+        int mes = Entrada.entero();
+        String cadenaFecha = String.format("%s/%02d/%s", "14", mes, "2024");
+        return LocalDate.parse(cadenaFecha, DateTimeFormatter.ofPattern(Consola.CADENA_FORMATO_FECHA));
+    }
+
     @Override
     public void notificarResultado(Evento evento, String texto, boolean exito) {
         Objects.requireNonNull(evento, "No puedo notificar un evento nulo.");
@@ -145,9 +154,11 @@ public class VistaTexto implements Vista {
     @Override
     public void mostrarClientes(List<Cliente> clientes) {
         Objects.requireNonNull(clientes, "No puedo mostrar clientes nulos.");
+        // ¿Cómo usas el comparator con más de un atributo?
         if (clientes.isEmpty()) {
             System.out.println("No hay clientes para mostrar.");
         } else {
+            clientes.sort(Comparator.comparing(Cliente::getNombre).thenComparing(Cliente::getDni));
             for (Cliente cliente : clientes) {
                 System.out.println(cliente);
             }
@@ -160,6 +171,7 @@ public class VistaTexto implements Vista {
         if (vehiculos.isEmpty()) {
             System.out.println("No hay vehículos para mostrar.");
         } else {
+            vehiculos.sort(Comparator.comparing(Vehiculo::marca).thenComparing(Vehiculo::modelo).thenComparing(Vehiculo::matricula));
             for (Vehiculo vehiculo : vehiculos) {
                 System.out.println(vehiculo);
             }
@@ -172,9 +184,20 @@ public class VistaTexto implements Vista {
         if (trabajos.isEmpty()) {
             System.out.println("No hay trabajos para mostrar.");
         } else {
+            Comparator<Cliente> comparatorCliente = Comparator.comparing(Cliente::getNombre).thenComparing(Cliente::getDni);
+            trabajos.sort(Comparator.comparing(Trabajo::getFechaInicio).thenComparing(Trabajo::getCliente, comparatorCliente));
             for (Trabajo trabajo : trabajos) {
                 System.out.println(trabajo);
             }
+        }
+    }
+
+    @Override
+    public void mostrarEstadisticasMensuales(Map<TipoTrabajo, Integer> estadisticas) {
+        Objects.requireNonNull(estadisticas, "No puedo mostrar estadísticas nulas.");
+        //entryset te devuelve los pares de clave y elemento
+        for (Map.Entry<TipoTrabajo, Integer> entrada : estadisticas.entrySet()) {
+            System.out.println(entrada.getKey() + " -> " + entrada.getValue());
         }
     }
 }
