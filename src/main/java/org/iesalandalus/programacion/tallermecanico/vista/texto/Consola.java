@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class Consola {
 
-    static final String CADENA_FORMATO_FECHA = "dd/MM/yyyy";
+    private static final String CADENA_FORMATO_FECHA = "dd/MM/yyyy";
 
     private Consola() {
 
@@ -48,8 +48,8 @@ public class Consola {
         return Entrada.entero();
     }
 
-    static float leerReal(String mensaje) {
-        System.out.print(mensaje);
+    static float leerReal() {
+        System.out.print("Introduce el precio de material para un trabajo mecánico:");
         return Entrada.real();
     }
 

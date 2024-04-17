@@ -40,7 +40,7 @@ public class VistaTexto implements Vista {
 
     @Override
     public void terminar() {
-        System.out.println("Ha cerrado la aplicación, por lo que ha finalizado su ejecución.");
+        System.out.print("Ha cerrado la aplicación, por lo que ha finalizado su ejecución.");
     }
 
     @Override
@@ -107,7 +107,7 @@ public class VistaTexto implements Vista {
 
     @Override
     public float leerPrecioMaterial() {
-        return Consola.leerReal("Introduce el precio de material para un trabajo mecánico:");
+        return Consola.leerReal();
     }
 
     @Override
@@ -116,10 +116,14 @@ public class VistaTexto implements Vista {
     }
 
     public LocalDate leerMes() {
-        System.out.print("Introduce un mes: (Puede ser con un 0 a la izquierda)");
-        int mes = Entrada.entero();
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        int mes;
+        do {
+            System.out.print("Introduce un mes (sin tener en cuenta el cero):");
+            mes = Entrada.entero();
+        } while (mes <= 0 || mes > 12);
         String cadenaFecha = String.format("%s/%02d/%s", "14", mes, "2024");
-        return LocalDate.parse(cadenaFecha, DateTimeFormatter.ofPattern(Consola.CADENA_FORMATO_FECHA));
+        return LocalDate.parse(cadenaFecha, formato);
     }
 
     @Override
@@ -195,9 +199,8 @@ public class VistaTexto implements Vista {
     @Override
     public void mostrarEstadisticasMensuales(Map<TipoTrabajo, Integer> estadisticas) {
         Objects.requireNonNull(estadisticas, "No puedo mostrar estadísticas nulas.");
-        //entryset te devuelve los pares de clave y elemento
         for (Map.Entry<TipoTrabajo, Integer> entrada : estadisticas.entrySet()) {
-            System.out.println(entrada.getKey() + " -> " + entrada.getValue());
+            System.out.println(entrada.getKey().toString().toUpperCase() + " -> " + entrada.getValue());
         }
     }
 }

@@ -27,13 +27,13 @@ public class Controlador implements IControlador {
 
     @Override
     public void comenzar() {
-        modelo.comenzar(); // Llama a comenzar de Clientes
-        vista.comenzar();
+        modelo.comenzar(); // Lee los ficheros de clientes, vehículos y trabajos
+        vista.comenzar(); // Muestra el menú y notifica a cada suscriptor de su acción
     }
 
     @Override
     public void terminar() {
-        modelo.terminar(); // Llama a terminar de Clientes
+        modelo.terminar(); // Escribe en los ficheros de clientes, vehículos y trabajos
         vista.terminar();
     }
 
