@@ -12,9 +12,9 @@ import java.util.Map;
 
 public class ModeloCascada implements Modelo {
 
-    private final IClientes clientes;
-    private final IVehiculos vehiculos;
-    private final ITrabajos trabajos;
+    private IClientes clientes;
+    private IVehiculos vehiculos;
+    private ITrabajos trabajos;
 
     public ModeloCascada(FabricaFuenteDatos fabricaFuenteDatos) {
         IFuenteDatos fuenteDatos = fabricaFuenteDatos.crear();
@@ -72,7 +72,8 @@ public class ModeloCascada implements Modelo {
     @Override
     public Trabajo buscar(Trabajo trabajo) {
         // Antes devolvía una copia del trabajo, por eso no me cogía los cambios
-        return trabajos.buscar(trabajo);
+        // Ahora si funciona porque primero hago las modificaciones en el original y después hago la copia
+        return Trabajo.copiar(trabajos.buscar(trabajo));
     }
 
     @Override

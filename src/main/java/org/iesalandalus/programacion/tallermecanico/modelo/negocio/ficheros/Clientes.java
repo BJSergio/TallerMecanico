@@ -67,7 +67,7 @@ public class Clientes implements IClientes {
 
     @Override
     public void terminar() {
-        // Sobreescribe el fichero con los clientes de la lista19
+        // Sobreescribe el fichero con los clientes de la lista
         Document documentoXml = crearDocumentoXml();
         if (documentoXml != null) {
             documentoXml.appendChild(documentoXml.createElement(RAIZ));
