@@ -170,7 +170,7 @@ public class Trabajos implements ITrabajos {
         int contadorMecanico = 0;
         int contadorRevision = 0;
         for (Trabajo trabajo : coleccionTrabajos) {
-            if (trabajo.getFechaInicio().getMonth().equals(mes.getMonth())) {
+            if (trabajo.getFechaInicio().getMonth().equals(mes.getMonth()) && trabajo.getFechaInicio().getYear() == mes.getYear()) {
                 if (trabajo instanceof Mecanico) {
                     contadorMecanico++;
                 } else if (trabajo instanceof Revision) {

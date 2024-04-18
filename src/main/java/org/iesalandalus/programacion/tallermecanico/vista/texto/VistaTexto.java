@@ -118,11 +118,14 @@ public class VistaTexto implements Vista {
     public LocalDate leerMes() {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         int mes;
+        int anio;
         do {
-            System.out.print("Introduce un mes (sin tener en cuenta el cero):");
+            System.out.print("Introduce el mes:");
             mes = Entrada.entero();
+            System.out.print("Introduce el año de ese mes:");
+            anio = Entrada.entero();
         } while (mes <= 0 || mes > 12);
-        String cadenaFecha = String.format("%s/%02d/%s", "14", mes, "2024");
+        String cadenaFecha = String.format("%s/%02d/%s", "14", mes, anio);
         return LocalDate.parse(cadenaFecha, formato);
     }
 
