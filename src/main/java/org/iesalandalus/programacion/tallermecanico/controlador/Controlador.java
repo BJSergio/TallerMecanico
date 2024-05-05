@@ -2,13 +2,11 @@ package org.iesalandalus.programacion.tallermecanico.controlador;
 
 import org.iesalandalus.programacion.tallermecanico.modelo.FabricaModelo;
 import org.iesalandalus.programacion.tallermecanico.modelo.Modelo;
-import org.iesalandalus.programacion.tallermecanico.modelo.dominio.TipoTrabajo;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.FabricaFuenteDatos;
 import org.iesalandalus.programacion.tallermecanico.vista.FabricaVista;
 import org.iesalandalus.programacion.tallermecanico.vista.Vista;
 import org.iesalandalus.programacion.tallermecanico.vista.eventos.Evento;
 
-import java.util.Map;
 import java.util.Objects;
 
 public class Controlador implements IControlador {
@@ -95,10 +93,9 @@ public class Controlador implements IControlador {
                     modelo.cerrar(vista.leerTrabajoVehiculo(), vista.leerFechaCierre());
                     resultado = "El trabajo se ha cerrado correctamente.";
                 }
-                case MOSTRAR_ESTADISTICAS_MENSUALES -> {
-                    Map<TipoTrabajo, Integer> estadisticas = modelo.getEstadisticasMensuales(vista.leerMes());
-                    vista.mostrarEstadisticasMensuales(estadisticas);
-                }
+                case MOSTRAR_ESTADISTICAS_MENSUALES ->
+                        vista.mostrarEstadisticasMensuales(modelo.getEstadisticasMensuales(vista.leerMes()));
+
                 case SALIR -> System.out.println("Adiós!!!");
             }
             if (!resultado.isBlank()) {

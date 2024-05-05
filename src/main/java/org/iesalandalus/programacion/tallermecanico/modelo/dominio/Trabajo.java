@@ -139,7 +139,7 @@ public abstract class Trabajo {
 
     /*
     Un trabajo es el mismo si se busca por su fechaInicio, cliente y vehículo.
-    Por lo que no tiene en cuenta si es un Mecánico o una Revisión
+    Por lo que no tiene en cuenta si es un mecánico o una revisión
      */
     @Override
     public boolean equals(Object o) {

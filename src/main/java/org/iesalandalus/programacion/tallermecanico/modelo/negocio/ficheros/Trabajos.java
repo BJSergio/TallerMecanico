@@ -58,7 +58,7 @@ public class Trabajos implements ITrabajos {
             Element elementoTrabajo = (Element) listaTrabajos.item(i);
             try {
                 insertar(getTrabajo(elementoTrabajo));
-            } catch (OperationNotSupportedException | NullPointerException e) {
+            } catch (OperationNotSupportedException | NullPointerException | IllegalArgumentException e) {
                 System.out.println("ERROR: Al procesar el trabajo número: " + i + ", " + e.getMessage().toLowerCase());
             }
         }
@@ -66,7 +66,7 @@ public class Trabajos implements ITrabajos {
 
     private Trabajo getTrabajo(Element elemento) throws OperationNotSupportedException {
         Objects.requireNonNull(elemento, "El elemento no puede ser nulo.");
-        Trabajo trabajoADevolver;
+        Trabajo trabajoADevolver = null;
         Cliente clienteEncontrado = Clientes.getInstancia().buscar(Cliente.get(elemento.getAttribute(CLIENTE)));
         Vehiculo vehiculoEncontrado = Vehiculos.getInstancia().buscar(Vehiculo.get(elemento.getAttribute(VEHICULO)));
         LocalDate fechaInicio = LocalDate.parse(elemento.getAttribute(FECHA_INICIO), FORMATO_FECHA);
@@ -76,16 +76,18 @@ public class Trabajos implements ITrabajos {
                 float precioMaterial = Float.parseFloat(elemento.getAttribute(PRECIO_MATERIAL));
                 ((Mecanico) trabajoADevolver).anadirPrecioMaterial(precioMaterial);
             }
-        } else {
+        } else if (elemento.getAttribute(TIPO).equals(REVISION)) {
             trabajoADevolver = new Revision(clienteEncontrado, vehiculoEncontrado, fechaInicio);
         }
-        if (elemento.hasAttribute(HORAS)) {
-            int horas = Integer.parseInt(elemento.getAttribute(HORAS));
-            trabajoADevolver.anadirHoras(horas);
-        }
-        if (elemento.hasAttribute(FECHA_FIN)) {
-            LocalDate fechaFin = LocalDate.parse(elemento.getAttribute(FECHA_FIN), FORMATO_FECHA);
-            trabajoADevolver.cerrar(fechaFin);
+        if (trabajoADevolver != null) {
+            if (elemento.hasAttribute(HORAS)) {
+                int horas = Integer.parseInt(elemento.getAttribute(HORAS));
+                trabajoADevolver.anadirHoras(horas);
+            }
+            if (elemento.hasAttribute(FECHA_FIN)) {
+                LocalDate fechaFin = LocalDate.parse(elemento.getAttribute(FECHA_FIN), FORMATO_FECHA);
+                trabajoADevolver.cerrar(fechaFin);
+            }
         }
         return trabajoADevolver;
     }
@@ -127,6 +129,7 @@ public class Trabajos implements ITrabajos {
         elementoTrabajo.setAttribute(CLIENTE, trabajo.getCliente().getDni());
         elementoTrabajo.setAttribute(VEHICULO, trabajo.getVehiculo().matricula());
         elementoTrabajo.setAttribute(FECHA_INICIO, trabajo.getFechaInicio().format(FORMATO_FECHA));
+
         if (trabajo.getHoras() != 0) {
             elementoTrabajo.setAttribute(HORAS, String.valueOf(trabajo.getHoras()));
         }
@@ -167,24 +170,21 @@ public class Trabajos implements ITrabajos {
     public Map<TipoTrabajo, Integer> getEstadisticasMensuales(LocalDate mes) {
         Objects.requireNonNull(mes, "El mes no puede ser nulo.");
         Map<TipoTrabajo, Integer> estadisticas = inicializarEstadisticas();
-        int contadorMecanico = 0;
-        int contadorRevision = 0;
+        // Antes inicializaba mal las estadísticas, cuando no había trabajos salía null
         for (Trabajo trabajo : coleccionTrabajos) {
             if (trabajo.getFechaInicio().getMonth().equals(mes.getMonth()) && trabajo.getFechaInicio().getYear() == mes.getYear()) {
-                if (trabajo instanceof Mecanico) {
-                    contadorMecanico++;
-                } else if (trabajo instanceof Revision) {
-                    contadorRevision++;
-                }
+                TipoTrabajo tipoTrabajo = TipoTrabajo.get(trabajo);
+                estadisticas.put(tipoTrabajo, estadisticas.get(tipoTrabajo) + 1);
             }
         }
-        estadisticas.put(TipoTrabajo.MECANICO, contadorMecanico);
-        estadisticas.put(TipoTrabajo.REVISION, contadorRevision);
         return estadisticas;
     }
 
     private Map<TipoTrabajo, Integer> inicializarEstadisticas() {
-        return new EnumMap<>(TipoTrabajo.class);
+        Map<TipoTrabajo, Integer> mapaDevolver = new EnumMap<>(TipoTrabajo.class);
+        mapaDevolver.put(TipoTrabajo.MECANICO, 0);
+        mapaDevolver.put(TipoTrabajo.REVISION, 0);
+        return mapaDevolver;
     }
 
     @Override

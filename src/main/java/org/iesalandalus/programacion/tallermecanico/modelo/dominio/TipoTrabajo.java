@@ -12,7 +12,13 @@ public enum TipoTrabajo {
     }
 
     public static TipoTrabajo get(Trabajo trabajo) {
-        return trabajo instanceof Mecanico ? MECANICO : REVISION;
+        TipoTrabajo tipoTrabajo = null;
+        if (trabajo instanceof Mecanico) {
+            tipoTrabajo = MECANICO;
+        } else if (trabajo instanceof Revision) {
+            tipoTrabajo = REVISION;
+        }
+        return tipoTrabajo;
     }
 
     @Override
