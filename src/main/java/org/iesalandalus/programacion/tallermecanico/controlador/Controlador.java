@@ -76,7 +76,10 @@ public class Controlador implements IControlador {
                     resultado = "Trabajo mecánico insertado correctamente.";
                 }
                 case BUSCAR_TRABAJO -> vista.mostrarTrabajo(modelo.buscar(vista.leerRevision()));
-                case BORRAR_TRABAJO -> modelo.borrar(modelo.buscar(vista.leerRevision()));
+                case BORRAR_TRABAJO -> {
+                    modelo.borrar(modelo.buscar(vista.leerRevision()));
+                    resultado = "Trabajo eliminado correctamente.";
+                }
                 case LISTAR_TRABAJOS -> vista.mostrarTrabajos(modelo.getTrabajos());
                 case LISTAR_TRABAJOS_CLIENTE -> vista.mostrarTrabajos(modelo.getTrabajos(vista.leerClienteDni()));
                 case LISTAR_TRABAJOS_VEHICULO ->
@@ -96,7 +99,10 @@ public class Controlador implements IControlador {
                 case MOSTRAR_ESTADISTICAS_MENSUALES ->
                         vista.mostrarEstadisticasMensuales(modelo.getEstadisticasMensuales(vista.leerMes()));
 
-                case SALIR -> System.out.println("Adiós!!!");
+                case SALIR -> {
+                    System.out.println("Adiós!!!");
+                    modelo.terminar();
+                }
             }
             if (!resultado.isBlank()) {
                 vista.notificarResultado(evento, resultado, true);

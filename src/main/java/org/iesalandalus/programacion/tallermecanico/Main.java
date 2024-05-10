@@ -12,9 +12,8 @@ public class Main {
         // El controlador crea el modelo usando la FabricaFuenteDatos ficheros y la vista
         FabricaModelo modelo = FabricaModelo.CASCADA;
         FabricaFuenteDatos fuenteDatos = FabricaFuenteDatos.FICHEROS;
-        FabricaVista vista = FabricaVista.TEXTO;
+        FabricaVista vista = FabricaVista.GRAFICA;
         Controlador controlador = new Controlador(modelo, fuenteDatos, vista);
         controlador.comenzar();
-        controlador.terminar();
     }
 }
