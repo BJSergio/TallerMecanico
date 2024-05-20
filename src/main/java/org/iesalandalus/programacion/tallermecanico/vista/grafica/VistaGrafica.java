@@ -141,6 +141,7 @@ public class VistaGrafica implements Vista {
         // Si salta alguna excepción en el buscar no llama a la clase
         BuscarCliente vistaBuscarCliente = (BuscarCliente) Controladores.get("/fxml/buscarCliente.fxml", "Buscar cliente", ventanaPrincipal.getEscenario());
         vistaBuscarCliente.setCliente(cliente);
+        vistaBuscarCliente.getEscenario().showAndWait();
     }
 
     @Override

@@ -18,9 +18,6 @@ public class BuscarCliente extends Controlador {
     @FXML
     private TextField tfTelefono;
 
-    private Cliente clienteEncontrado; // Atributo creado para quedarme con el cliente de la vista
-
-
     @FXML
     void cerrarBusqueda() {
         getEscenario().close();
@@ -42,18 +39,15 @@ public class BuscarCliente extends Controlador {
         vistaModificarCliente.getTfNombre().setText(tfNombre.getText());
         vistaModificarCliente.getTfTelefono().setText(tfTelefono.getText());
         vistaModificarCliente.getEscenario().showAndWait();
-        VistaGrafica.getInstancia().getGestorEventos().notificar(Evento.MODIFICAR_CLIENTE);
-        vistaModificarCliente.getEscenario().close();
-
+        if(!vistaModificarCliente.isCancelado()) {
+            VistaGrafica.getInstancia().getGestorEventos().notificar(Evento.MODIFICAR_CLIENTE);
+            getEscenario().close();
+        }
     }
 
-    public void setCliente(Cliente cliente) { // Asigna el atributo para el modificar
-        this.clienteEncontrado = cliente;
-    }
-
-    public void asignarCampos() { // Este método asigna los campos a la ventana de buscar
-        tfDni.setText(clienteEncontrado.getDni());
-        tfNombre.setText(clienteEncontrado.getNombre());
-        tfTelefono.setText(clienteEncontrado.getTelefono());
+    public void setCliente(Cliente cliente) {
+        tfDni.setText(cliente.getDni());
+        tfNombre.setText(cliente.getNombre());
+        tfTelefono.setText(cliente.getTelefono());
     }
 }
