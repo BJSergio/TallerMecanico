@@ -8,7 +8,6 @@ import org.iesalandalus.programacion.tallermecanico.vista.FabricaVista;
 public class Main {
 
     public static void main(String[] args) {
-
         // El controlador crea el modelo usando la FabricaFuenteDatos ficheros y la vista
         FabricaModelo modelo = FabricaModelo.CASCADA;
         FabricaFuenteDatos fuenteDatos = FabricaFuenteDatos.FICHEROS;

@@ -35,7 +35,7 @@ public class VistaTexto implements Vista {
 
     private void ejecutar(Evento evento) {
         Consola.mostrarCabecera(evento.toString());
-        gestorEventos.notificar(evento);
+        gestorEventos.notificar(evento); // Notifica el evento antes de haber ocurrido
     }
 
     @Override

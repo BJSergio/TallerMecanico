@@ -12,7 +12,7 @@ import java.util.Objects;
 public class Controlador implements IControlador {
 
     private final Modelo modelo;
-    private final Vista vista;
+    private final Vista vista; // Dependiendo de la vista llamará a la gráfica o texto
 
     public Controlador(FabricaModelo fabricaModelo, FabricaFuenteDatos fabricaFuenteDatos, FabricaVista fabricaVista) {
         Objects.requireNonNull(fabricaModelo, "El modelo no puede ser nulo.");

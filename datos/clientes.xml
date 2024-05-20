@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <clientes>
-    <cliente dni="11223344B" nombre="Bob Esponja" telefono="950112233"/>
-    <cliente dni="11111111H" nombre="Patricio Estrella" telefono="950111111"/>
     <cliente dni="99999999R" nombre="Alejandro" telefono="600152312"/>
     <cliente dni="76661810G" nombre="Sergio" telefono="722354972"/>
 </clientes>

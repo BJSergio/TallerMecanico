@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorPane" maxWidth="726.0" minWidth="300.0" prefHeight="426.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.iesalandalus.programacion.tallermecanico.vista.grafica.controladores.VentanaPrincipal">
+   <children>
+      <MenuBar prefHeight="26.0" prefWidth="600.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Ayuda">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <VBox layoutX="111.0" layoutY="26.0" prefHeight="400.0" prefWidth="480.0">
+         <children>
+            <HBox fx:id="hboxCliente" alignment="CENTER" maxWidth="460.0" prefHeight="92.0" prefWidth="455.0" spacing="20.0">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="20.0" />
+               </VBox.margin>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#insertarCliente" text="Insertar">
+                     <graphic>
+                        <ImageView fitHeight="60.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../imagenes/cliente/imagenInsertar.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Segoe Print Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#buscarCliente" text="Buscar">
+                     <graphic>
+                        <ImageView fitHeight="60.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../imagenes/cliente/imagenBuscar.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Segoe Print Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#listarCliente" text="Listar">
+                     <graphic>
+                        <ImageView fitHeight="60.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../imagenes/cliente/imagenListar.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Segoe Print Bold" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox fx:id="hboxVehiculo" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="40.0" />
+               </VBox.margin>
+               <children>
+                  <Button mnemonicParsing="false" text="Insertar">
+                     <graphic>
+                        <ImageView fitHeight="60.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../imagenes/coche/imagenInsertarCoche.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Segoe Print Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" text="Buscar">
+                     <graphic>
+                        <ImageView fitHeight="60.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../imagenes/coche/imagenBuscarCoche2.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Segoe Print Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" text="Listar">
+                     <graphic>
+                        <ImageView fitHeight="60.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../imagenes/coche/imagenListarCoche.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Segoe Print Bold" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox fx:id="hboxTrabajo" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+               <VBox.margin>
+                  <Insets bottom="15.0" left="10.0" right="10.0" top="40.0" />
+               </VBox.margin>
+               <children>
+                  <Button mnemonicParsing="false" text="Insertar">
+                     <graphic>
+                        <ImageView fitHeight="60.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../imagenes/trabajo/imagenInsertarTrabajo1.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Segoe Print Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" text="Buscar">
+                     <graphic>
+                        <ImageView fitHeight="60.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../imagenes/trabajo/imagenBuscarTrabajo1.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Segoe Print Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" text="Listar">
+                     <graphic>
+                        <ImageView fitHeight="60.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../imagenes/trabajo/imagenListarTrabajos1.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Segoe Print Bold" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox alignment="CENTER" layoutY="26.0" minHeight="-Infinity" prefHeight="400.0" prefWidth="106.0" spacing="35.0">
+         <children>
+            <ImageView fitHeight="130.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/cliente/imagen2.png" />
+               </image>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </ImageView>
+            <ImageView fitHeight="130.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/coche/coche2.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="130.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/trabajo/trabajo1.png" />
+               </image>
+            </ImageView>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

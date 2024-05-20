@@ -54,6 +54,10 @@ public enum Evento {
         return eventos.get(codigo);
     }
 
+    public String getTexto() {
+        return texto;
+    }
+
     @Override
     public String toString() {
         return String.format("%d. %s", codigo, texto);
