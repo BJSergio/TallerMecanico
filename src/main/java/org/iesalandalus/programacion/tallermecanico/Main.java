@@ -9,10 +9,12 @@ public class Main {
 
     public static void main(String[] args) {
         // El controlador crea el modelo usando la FabricaFuenteDatos ficheros y la vista
+        FabricaVista fabricaVista = FabricaVista.GRAFICA;
+        FabricaFuenteDatos fabricaFuenteDatos = FabricaFuenteDatos.FICHEROS;
         FabricaModelo modelo = FabricaModelo.CASCADA;
-        FabricaFuenteDatos fuenteDatos = FabricaFuenteDatos.FICHEROS;
-        FabricaVista vista = FabricaVista.GRAFICA;
-        Controlador controlador = new Controlador(modelo, fuenteDatos, vista);
+        Controlador controlador = new Controlador(modelo,fabricaFuenteDatos,fabricaVista);
         controlador.comenzar();
     }
+
 }
+

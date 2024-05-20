@@ -34,7 +34,7 @@
          <children>
             <Label text="Nombre:" textFill="WHITE">
                <GridPane.margin>
-                  <Insets left="60.0" />
+                  <Insets left="70.0" />
                </GridPane.margin>
                <font>
                   <Font name="Comic Sans MS Bold" size="18.0" />
@@ -42,7 +42,7 @@
             </Label>
             <Label text="DNI:" textFill="WHITE" GridPane.rowIndex="1">
                <GridPane.margin>
-                  <Insets left="88.0" />
+                  <Insets left="98.0" />
                </GridPane.margin>
                <font>
                   <Font name="Comic Sans MS Bold" size="18.0" />
@@ -50,7 +50,7 @@
             </Label>
             <Label text="Teléfono:" textFill="WHITE" GridPane.rowIndex="2">
                <GridPane.margin>
-                  <Insets left="50.0" />
+                  <Insets left="60.0" />
                </GridPane.margin>
                <font>
                   <Font name="Comic Sans MS Bold" size="18.0" />

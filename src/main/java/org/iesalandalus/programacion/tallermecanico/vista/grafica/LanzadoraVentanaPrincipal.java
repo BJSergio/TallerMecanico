@@ -9,8 +9,9 @@ public class LanzadoraVentanaPrincipal extends Application {
 
     @Override
     public void start(Stage escenarioPrincipal) throws Exception {
-        Controlador ventanaPrincipal = Controladores.get("/fxml/VentanaPrincipal.fxml","Taller mecánico",null);
+        Controlador ventanaPrincipal = Controladores.get("/fxml/root.fxml","Taller mecánico",null);
         VistaGrafica.getInstancia().setVentanaPrincipal(ventanaPrincipal);
+        ventanaPrincipal.addHojaEstilos("/estilos/root.css");
         ventanaPrincipal.getEscenario().show();
     }
 

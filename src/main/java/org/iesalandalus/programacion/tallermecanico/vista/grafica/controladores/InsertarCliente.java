@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.tallermecanico.vista.grafica.utilidades.Controlador;
+import org.iesalandalus.programacion.tallermecanico.vista.grafica.utilidades.Controles;
 
 public class InsertarCliente extends Controlador {
 
@@ -29,9 +30,7 @@ public class InsertarCliente extends Controlador {
 
     public void limpiarCampos() {
         esCancelado = true;
-        tfNombre.clear();
-        tfDni.clear();
-        tfTelefono.clear();
+        Controles.limpiarCamposTexto(tfDni,tfNombre,tfTelefono);
     }
 
     @FXML

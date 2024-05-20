@@ -9,26 +9,28 @@ public class LeerClienteDni extends Controlador {
 
     @FXML
     private TextField tfClienteDni;
-    private boolean isLecturaCancelada;
+
+    private boolean isCancelado;
 
     @FXML
     void aceptarLecturaDni() {
-        isLecturaCancelada = false;
+        isCancelado = false;
         getEscenario().close();
     }
 
     @FXML
     void cancelarLecturaDni() {
-        isLecturaCancelada = true;
+        isCancelado = true;
         getEscenario().close();
         Controles.limpiarCamposTexto(tfClienteDni);
     }
 
-    public boolean isLecturaCancelada() {
-        return isLecturaCancelada;
+    public boolean isCancelado() {
+        return isCancelado;
     }
+
     public void limpiarCampo() {
-        isLecturaCancelada = true;
+        isCancelado = true;
         tfClienteDni.clear();
     }
 

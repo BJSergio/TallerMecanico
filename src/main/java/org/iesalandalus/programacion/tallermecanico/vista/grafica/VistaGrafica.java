@@ -7,7 +7,9 @@ import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.tallermecanico.vista.Vista;
 import org.iesalandalus.programacion.tallermecanico.vista.eventos.Evento;
 import org.iesalandalus.programacion.tallermecanico.vista.eventos.GestorEventos;
+import org.iesalandalus.programacion.tallermecanico.vista.grafica.controladores.*;
 import org.iesalandalus.programacion.tallermecanico.vista.grafica.utilidades.Controlador;
+import org.iesalandalus.programacion.tallermecanico.vista.grafica.utilidades.Controladores;
 import org.iesalandalus.programacion.tallermecanico.vista.grafica.utilidades.Dialogos;
 
 import java.time.LocalDate;
@@ -57,22 +59,26 @@ public class VistaGrafica implements Vista {
 
     @Override
     public Cliente leerCliente() {
-        return null;
+        InsertarCliente insertarCliente = (InsertarCliente) Controladores.get("/fxml/insertarCliente.fxml", "Insertar cliente", ventanaPrincipal.getEscenario());
+        return insertarCliente.getCliente();
     }
 
     @Override
     public Cliente leerClienteDni() {
-        return null;
+        LeerClienteDni vistaLeerDni = (LeerClienteDni) Controladores.get("/fxml/leerClienteDni.fxml", "Leer dni", ventanaPrincipal.getEscenario());
+        return Cliente.get(vistaLeerDni.getDniLeido());
     }
 
     @Override
     public String leerNuevoNombre() {
-        return "";
+        ModificarCliente modificarCliente = (ModificarCliente) Controladores.get("/fxml/modificarCliente.fxml","Modificar un cliente",ventanaPrincipal.getEscenario());
+        return modificarCliente.getNuevoNombre();
     }
 
     @Override
     public String leerNuevoTelefono() {
-        return "";
+        ModificarCliente modificarCliente = (ModificarCliente) Controladores.get("/fxml/modificarCliente.fxml","Modificar un cliente",ventanaPrincipal.getEscenario());
+        return modificarCliente.getNuevoTelefono();
     }
 
     @Override
@@ -131,7 +137,10 @@ public class VistaGrafica implements Vista {
 
     @Override
     public void mostrarCliente(Cliente cliente) {
-
+        // Una vez cargada la ventana le asigno el cliente que me pasan, el cual el modelo busca
+        // Si salta alguna excepción en el buscar no llama a la clase
+        BuscarCliente vistaBuscarCliente = (BuscarCliente) Controladores.get("/fxml/buscarCliente.fxml", "Buscar cliente", ventanaPrincipal.getEscenario());
+        vistaBuscarCliente.setCliente(cliente);
     }
 
     @Override
@@ -156,7 +165,8 @@ public class VistaGrafica implements Vista {
 
     @Override
     public void mostrarClientes(List<Cliente> clientes) {
-
+        ListarClientes listarClientes = (ListarClientes) Controladores.get("/fxml/listarClientes.fxml", "Listar clientes", ventanaPrincipal.getEscenario());
+        listarClientes.setListaClientes(clientes);
     }
 
     @Override

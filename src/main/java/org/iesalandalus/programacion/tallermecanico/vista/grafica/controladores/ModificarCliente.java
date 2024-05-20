@@ -3,6 +3,7 @@ package org.iesalandalus.programacion.tallermecanico.vista.grafica.controladores
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import org.iesalandalus.programacion.tallermecanico.vista.grafica.utilidades.Controlador;
+import org.iesalandalus.programacion.tallermecanico.vista.grafica.utilidades.Controles;
 
 public class ModificarCliente extends Controlador {
 
@@ -14,30 +15,6 @@ public class ModificarCliente extends Controlador {
     private TextField tfTelefono;
 
     private boolean isCancelado;
-
-    public String getNuevoNombre() {
-        return tfNombre.getText();
-    }
-
-    public String getNuevoTelefono() {
-        return tfTelefono.getText();
-    }
-
-    public void setTfDni(String dni) {
-        tfDni.setText(dni);
-    }
-
-    public void setTfNombre(String nombre) {
-        tfNombre.setText(nombre);
-    }
-
-    public void setTfTelefono(String telefono) {
-        tfTelefono.setText(telefono);
-    }
-
-    public boolean isCancelado() {
-        return isCancelado;
-    }
 
     @FXML
     void aceptarModificar() {
@@ -53,9 +30,30 @@ public class ModificarCliente extends Controlador {
 
     public void limpiarCampos() {
         isCancelado = true;
-        tfNombre.clear();
-        tfTelefono.clear();
+        Controles.limpiarCamposTexto(tfDni,tfNombre,tfTelefono);
     }
 
+    public boolean isCancelado() {
+        return isCancelado;
+    }
 
+    public String getNuevoNombre() {
+        return tfNombre.getText();
+    }
+
+    public String getNuevoTelefono() {
+        return tfTelefono.getText();
+    }
+
+    public TextField getTfDni() {
+        return tfDni;
+    }
+
+    public TextField getTfNombre() {
+        return tfNombre;
+    }
+
+    public TextField getTfTelefono() {
+        return tfTelefono;
+    }
 }

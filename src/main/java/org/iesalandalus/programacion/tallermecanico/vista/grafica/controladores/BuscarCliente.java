@@ -18,8 +18,7 @@ public class BuscarCliente extends Controlador {
     @FXML
     private TextField tfTelefono;
 
-    // Atributo creado para asignar el cliente que me pasan de la vista y ponerlo en el modificar
-    private Cliente clienteEncontrado;
+    private Cliente clienteEncontrado; // Atributo creado para quedarme con el cliente de la vista
 
 
     @FXML
@@ -37,25 +36,24 @@ public class BuscarCliente extends Controlador {
 
     @FXML
     void modificarCliente() {
-        ModificarCliente modificarCliente = (ModificarCliente) Controladores.get("/fxml/modificarCliente.fxml", "Modificar un cliente", getEscenario());
-        modificarCliente.limpiarCampos();
-        modificarCliente.setTfDni(clienteEncontrado.getDni());
-        modificarCliente.setTfNombre(clienteEncontrado.getNombre());
-        modificarCliente.setTfTelefono(clienteEncontrado.getTelefono());
-        modificarCliente.getEscenario().showAndWait();
-        if(!modificarCliente.isCancelado()) {
-            VistaGrafica.getInstancia().getGestorEventos().notificar(Evento.MODIFICAR_CLIENTE);
-            getEscenario().close();
-        }
+        ModificarCliente vistaModificarCliente = (ModificarCliente) Controladores.get("/fxml/modificarCliente.fxml", "Modificar un cliente", getEscenario());
+        vistaModificarCliente.limpiarCampos();
+        vistaModificarCliente.getTfDni().setText(tfDni.getText());
+        vistaModificarCliente.getTfNombre().setText(tfNombre.getText());
+        vistaModificarCliente.getTfTelefono().setText(tfTelefono.getText());
+        vistaModificarCliente.getEscenario().showAndWait();
+        VistaGrafica.getInstancia().getGestorEventos().notificar(Evento.MODIFICAR_CLIENTE);
+        vistaModificarCliente.getEscenario().close();
+
     }
 
     public void setCliente(Cliente cliente) { // Asigna el atributo para el modificar
         this.clienteEncontrado = cliente;
     }
 
-    public void asignarCampos(Cliente cliente) { // Este método asigna los campos a la ventana de buscar
-        tfDni.setText(cliente.getDni());
-        tfNombre.setText(cliente.getNombre());
-        tfTelefono.setText(cliente.getTelefono());
+    public void asignarCampos() { // Este método asigna los campos a la ventana de buscar
+        tfDni.setText(clienteEncontrado.getDni());
+        tfNombre.setText(clienteEncontrado.getNombre());
+        tfTelefono.setText(clienteEncontrado.getTelefono());
     }
 }

@@ -1,10 +1,7 @@
 package org.iesalandalus.programacion.tallermecanico.vista.grafica.controladores;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -25,8 +22,8 @@ public class ListarClientes extends Controlador {
     private TableColumn<Cliente, String> columnaTelefono = new TableColumn<>("telefono");
 
 
-    public void setTablaClientes(List<Cliente> tablaCliente) {
-        tablaClientes.setItems(FXCollections.observableArrayList(tablaCliente));
+    public void setListaClientes(List<Cliente> listCliente) {
+        tablaClientes.setItems(FXCollections.observableArrayList(listCliente));
     }
 
     @FXML
